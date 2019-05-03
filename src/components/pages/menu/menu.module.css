@@ -1,0 +1,35 @@
+.Menu {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Menu h1 {
+  font-size: 4em;
+  margin: 10px 0;
+}
+
+.Menu .menuControl {
+  margin: 40px 0 0;
+}
+
+.Menu .menuControl a {
+  width: 150px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 500;
+  color: black;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin: 10px 0;
+  background: white;
+  border: 2px solid rgb(190, 188, 29);
+}
+
+.Menu .menuControl a:hover {
+  background: #F8DC3D;
+}

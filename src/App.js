@@ -10,9 +10,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Route path="/" exact exact component={Menu} />
+        <Route path="/test" exact exact component={Menu} />
         <Route path="/LevelsPage" component={LevelsPage} />
-        <Route path="/Game" component={Game} />
+        <Route path="/" component={Game} />
       </div>
     );
   }

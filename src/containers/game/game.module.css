@@ -61,7 +61,7 @@
 
 .container .game {
 	width: 1000px;
-	height: 100vh;
+	height: 600px;
 	position: relative;
 	background: linear-gradient(to top, transparent, lightblue);
 }
@@ -87,15 +87,15 @@
 .container .game .object {
 	width: 20px;
 	height: 20px;
-	background: #c5c5af;
+	background: #000000;
 	position: absolute;
 	bottom: 100px;
 	right: 0;
-	transition: transform, 8s linear;
+	transition: all 8s linear;
 }
 
 .dino.jump {
-	animation: jump 1.4s 1 linear;
+	animation: jump 1.4s 1 ease-in-out;
 }
 	
 @keyframes jump {

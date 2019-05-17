@@ -3,11 +3,7 @@ import classes from "./Game.module.css";
 
 class Game extends Component {
   state = {
-    jumping: true,
-    object: null,
-    player: null,
-    platform: null,
-    game: null
+    jumping: true
   };
 
   jump = event => {
@@ -32,7 +28,6 @@ class Game extends Component {
       }, 1400);
     }
 
-    console.log(object, player, platform, game);
     this.moving(object, player, platform, game);
   };
 
@@ -44,30 +39,29 @@ class Game extends Component {
     let stop = false;
     let move = null;
 
-    if (
+    let touchesX =
       objectPosition.x < playerPosition.width + playerPosition.x &&
-      objectPosition.x > playerPosition.x
-    ) {
-      if (
-        playerPosition.y + playerPosition.height === platformPosition.y ||
-        playerPosition.y + playerPosition.height > platformPosition.y + 20
-      ) {
-        console.log("objectsMove interval have cleared in condition");
-        stop = true;
-      }
+      objectPosition.x > playerPosition.x;
+    let touchesY =
+      playerPosition.y + playerPosition.height === platformPosition.y ||
+      playerPosition.y + playerPosition.height > platformPosition.y + 20;
+
+    if (touchesX && touchesY) {
+      console.log("stop");
+      stop = true;
     }
 
     if (objectPosition.x <= gamePosition.x) {
-      console.log("objectsMove interval have cleared");
+      console.log("stop");
       stop = true;
     }
 
     stop
       ? (move = null)
       : (move = setTimeout(() => {
-          clearTimeout(move);
           this.moving(object, player, platform, game);
-        }, 1000));
+          clearTimeout(move);
+        }, 50));
   };
 
   render() {

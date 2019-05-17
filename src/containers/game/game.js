@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import classes from "./Game.module.css";
+import file from "../../assets/image/platform.png";
 
 class Game extends Component {
   state = {
-    jumping: true
+    jumping: true,
+    modalWindow: false
   };
 
   jump = event => {
@@ -14,9 +16,13 @@ class Game extends Component {
     let platform =
       event.target.parentElement.parentElement.children[0].children[3];
     let game = event.target.parentElement.parentElement.children[0];
+    let img =
+      event.target.parentElement.parentElement.children[0].children[3]
+        .firstChild;
 
     if (this.state.jumping) {
       object.style.transform = "translate(-1020px)";
+      img.style.transform = "translate(-1000px)";
       this.setState({
         jumping: false
       });
@@ -28,7 +34,7 @@ class Game extends Component {
       }, 1400);
     }
 
-    this.moving(object, player, platform, game);
+    this.moving(object, player, platform, game, img);
   };
 
   moving = (object, player, platform, game) => {
@@ -49,12 +55,25 @@ class Game extends Component {
     if (touchesX && touchesY) {
       console.log("stop");
       stop = true;
+      this.setState({
+        modalWindow: true
+      });
     }
 
     if (objectPosition.x <= gamePosition.x) {
       console.log("stop");
       stop = true;
+      this.setState({
+        modalWindow: true
+      });
     }
+
+    // if (imgPos.right === gamePosition.x) {
+    //   img.style = {
+    //     left: "2000px",
+    //     transform: "translateX(-2000px)"
+    //   }
+    // }
 
     stop
       ? (move = null)
@@ -72,6 +91,17 @@ class Game extends Component {
       playerClasses = [classes.dino, classes.jump].join(" ");
     }
     let player = <div className={playerClasses} />;
+    let modalWindow = null;
+    if (this.state.modalWindow) {
+      modalWindow = (
+        <div className={classes.modalWindow}>
+          <h1>Game over</h1>
+          <div className={classes.restart} />
+        </div>
+      );
+    } else {
+      modalWindow = null;
+    }
 
     return (
       <div className={classes.container}>
@@ -79,13 +109,14 @@ class Game extends Component {
           {player}
           <div className={classes.object} />
           <div className={classes.screen} />
-          <div className={classes.platform} />
+          <div className={classes.platform}>
+            <img src={file} alt="" />
+          </div>
         </div>
         <div className={classes.controls}>
-          <button className={classes.jump} onClick={this.jump}>
-            JUMP
-          </button>
+          <button className={classes.jump} onClick={this.jump} />
         </div>
+        {modalWindow}
       </div>
     );
   }

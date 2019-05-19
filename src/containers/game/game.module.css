@@ -70,7 +70,7 @@
 }
 
 .container .game .platform {
-	width: 100%;
+	width: 1000px;
 	height: 100px;
 	background: green;
 	position: absolute;
@@ -79,12 +79,20 @@
 }
 
 .container .game .platform .grass {
-	position: absolute;
-	left: 0;
-	bottom: 0;
 	width: 1000px;
 	height: 100px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
 	transition: all 7.8s linear;
+	background: url(../../assets/image/platform.png);
+}
+
+.container .game .platform .grass1 {
+	position: absolute;
+	bottom: 0;
+	left: 1000px;
+	transform: translateX(-2000px);
 }
 
 .container .game .dino {
@@ -103,7 +111,7 @@
 	position: absolute;
 	bottom: 100px;
 	right: 400px;
-	transition: all 8s linear;
+	transition: transform 8s linear;
 }
 
 .dino.jump {

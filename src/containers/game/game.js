@@ -5,7 +5,8 @@ import file from "../../assets/image/platform.png";
 class Game extends Component {
   state = {
     jumping: true,
-    modalWindow: false
+    modalWindow: false,
+    start: false
   };
 
   jump = event => {
@@ -16,15 +17,15 @@ class Game extends Component {
     let platform =
       event.target.parentElement.parentElement.children[0].children[3];
     let game = event.target.parentElement.parentElement.children[0];
-    let img =
+    let grass =
       event.target.parentElement.parentElement.children[0].children[3]
         .firstChild;
 
     if (this.state.jumping) {
       object.style.transform = "translate(-1020px)";
-      img.style.transform = "translate(-1000px)";
+      grass.style.transform = "translate(-1000px)";
       this.setState({
-        jumping: false
+        jumping: false,
       });
       let jumpingInterval = setTimeout(() => {
         this.setState({
@@ -34,7 +35,36 @@ class Game extends Component {
       }, 1400);
     }
 
-    this.moving(object, player, platform, game, img);
+    if (this.state.start === false) {
+      this.animationDecoration(grass, game);
+      this.moving(object, player, platform, game, grass);
+      this.setState({
+        start: true
+      })
+    }
+  };
+
+  animationDecoration = (grass, game) => {
+    let grassPos = grass.getBoundingClientRect();
+    let gamePosition = game.getBoundingClientRect();
+    let anima = false;
+
+    if (grassPos.right === gamePosition.x) {
+      grass.style.transition = "none";
+      grass.style.left = "2000px";
+      anima = true;
+    }
+    
+    console.log(grassPos.right === gamePosition.x);
+
+    let move = setTimeout(() => {
+      if (anima) {
+        grass.style.transition = "all 7.8s linear";
+        grass.style.transform = "translateX(-3000px)";
+      }
+      this.animationDecoration(grass, game);
+      clearTimeout(move);
+    }, 1000);
   };
 
   moving = (object, player, platform, game) => {
@@ -53,7 +83,7 @@ class Game extends Component {
       playerPosition.y + playerPosition.height > platformPosition.y + 20;
 
     if (touchesX && touchesY) {
-      console.log("stop");
+      console.log("stop, because object hit player!");
       stop = true;
       this.setState({
         modalWindow: true
@@ -67,13 +97,6 @@ class Game extends Component {
         modalWindow: true
       });
     }
-
-    // if (imgPos.right === gamePosition.x) {
-    //   img.style = {
-    //     left: "2000px",
-    //     transform: "translateX(-2000px)"
-    //   }
-    // }
 
     stop
       ? (move = null)
@@ -110,7 +133,9 @@ class Game extends Component {
           <div className={classes.object} />
           <div className={classes.screen} />
           <div className={classes.platform}>
-            <img src={file} alt="" />
+            <div className={classes.grass}>
+              <img src={file} alt="" />
+            </div>
           </div>
         </div>
         <div className={classes.controls}>

@@ -78,13 +78,13 @@
 	bottom: 0;
 }
 
-.container .game .platform img {
+.container .game .platform .grass {
 	position: absolute;
 	left: 0;
 	bottom: 0;
 	width: 1000px;
 	height: 100px;
-	transition: all 6.8s linear;
+	transition: all 7.8s linear;
 }
 
 .container .game .dino {

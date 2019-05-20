@@ -79,6 +79,7 @@
 	position: absolute;
 	left: 0;
 	bottom: 0;
+	background: url(../../assets/image/platform.png);
 }
 
 .container .game .platform .grass {
@@ -95,6 +96,7 @@
 	position: absolute;
 	bottom: 0;
 	left: 1000px;
+	transition: all 15.5s linear;
 }
 
 .container .game .dino {

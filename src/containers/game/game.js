@@ -15,6 +15,7 @@ class Game extends Component {
     let platform = instance.children[0].children[3];
     let game = instance.children[0];
     let grass = instance.children[0].children[3].firstChild;
+    let grass2 = instance.children[0].children[3].lastChild;
 
     if (this.state.jumping) {
       object.style.transform = "translate(-1020px)";
@@ -29,10 +30,8 @@ class Game extends Component {
       }, 1400);
     }
 
-    console.log(instance.children[0].children[3].lastChild);
-
     if (this.state.start === false) {
-      this.animationDecoration(grass, game);
+      this.animationDecoration(grass, grass2, game);
       this.moving(object, player, platform, game, grass);
       this.setState({
         start: true
@@ -40,34 +39,53 @@ class Game extends Component {
     }
   };
 
-  animationDecoration = (grass, game) => {
+  animationDecoration = (grass, grass2, game) => {
     let grassPos = grass.getBoundingClientRect();
+    let grass2Pos = grass2.getBoundingClientRect();
     let gamePosition = game.getBoundingClientRect();
     let anima = false;
-
-    if (
+    let anima2 = false;
+    let touchesGr1 =
       grassPos.right === gamePosition.right ||
       grassPos.left === gamePosition.left ||
-      grassPos.left === grassPos.right
-    ) {
-      grass.style.transform = "translateX(-1000px)";
+      grassPos.left === gamePosition.right;
+    let touchesGr2 =
+      grass2Pos.right === gamePosition.right ||
+      grass2Pos.left === gamePosition.left ||
+      grass2Pos.left === gamePosition.right;
+
+    if (touchesGr1) {
+      grass.style.left = "-1000px";
+    }
+    if (touchesGr2) {
+      grass2.style.left = "-1000px";
     }
 
     if (grassPos.right === gamePosition.left) {
       grass.style.transition = "none";
-      grass.style.left = "2000px";
+      grass.style.left = "1000px";
       anima = true;
+    }
+    if (grass2Pos.right === gamePosition.left) {
+      grass2.style.transition = "none";
+      grass2.style.left = "1000px";
+      anima2 = true;
     }
 
     let move = setTimeout(() => {
       if (anima) {
-        grass.style.transition = "all 7.8s linear";
+        grass.style.transition = "all 15.5s linear";
         grass.style.left = "0";
         anima = false;
       }
-      this.animationDecoration(grass, game);
+      if (anima2) {
+        grass2.style.transition = "all 15.5s linear";
+        grass2.style.left = "0";
+        anima2 = false;
+      }
+      this.animationDecoration(grass, grass2, game);
       clearTimeout(move);
-    }, 1000);
+    }, 100);
   };
 
   moving = (object, player, platform, game) => {

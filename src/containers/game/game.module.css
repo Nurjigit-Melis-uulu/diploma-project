@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
+
 .container {
 	width: 100%;
 	height: 100vh;
@@ -5,6 +7,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	font-family: 'VT323', monospace;
 }
 
 .container .modalWindow {
@@ -92,7 +95,6 @@
 	position: absolute;
 	bottom: 0;
 	left: 1000px;
-	transform: translateX(-2000px);
 }
 
 .container .game .dino {

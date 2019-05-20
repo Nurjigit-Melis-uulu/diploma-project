@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import classes from "./Game.module.css";
-import file from "../../assets/image/platform.png";
 
 class Game extends Component {
   state = {
@@ -10,22 +9,17 @@ class Game extends Component {
   };
 
   jump = event => {
-    let object =
-      event.target.parentElement.parentElement.children[0].children[1];
-    let player =
-      event.target.parentElement.parentElement.children[0].children[0];
-    let platform =
-      event.target.parentElement.parentElement.children[0].children[3];
-    let game = event.target.parentElement.parentElement.children[0];
-    let grass =
-      event.target.parentElement.parentElement.children[0].children[3]
-        .firstChild;
+    let instance = event.target.parentElement.parentElement;
+    let object = instance.children[0].children[1];
+    let player = instance.children[0].children[0];
+    let platform = instance.children[0].children[3];
+    let game = instance.children[0];
+    let grass = instance.children[0].children[3].firstChild;
 
     if (this.state.jumping) {
       object.style.transform = "translate(-1020px)";
-      grass.style.transform = "translate(-1000px)";
       this.setState({
-        jumping: false,
+        jumping: false
       });
       let jumpingInterval = setTimeout(() => {
         this.setState({
@@ -35,12 +29,14 @@ class Game extends Component {
       }, 1400);
     }
 
+    console.log(instance.children[0].children[3].lastChild);
+
     if (this.state.start === false) {
       this.animationDecoration(grass, game);
       this.moving(object, player, platform, game, grass);
       this.setState({
         start: true
-      })
+      });
     }
   };
 
@@ -49,18 +45,25 @@ class Game extends Component {
     let gamePosition = game.getBoundingClientRect();
     let anima = false;
 
-    if (grassPos.right === gamePosition.x) {
+    if (
+      grassPos.right === gamePosition.right ||
+      grassPos.left === gamePosition.left ||
+      grassPos.left === grassPos.right
+    ) {
+      grass.style.transform = "translateX(-1000px)";
+    }
+
+    if (grassPos.right === gamePosition.left) {
       grass.style.transition = "none";
       grass.style.left = "2000px";
       anima = true;
     }
-    
-    console.log(grassPos.right === gamePosition.x);
 
     let move = setTimeout(() => {
       if (anima) {
         grass.style.transition = "all 7.8s linear";
-        grass.style.transform = "translateX(-3000px)";
+        grass.style.left = "0";
+        anima = false;
       }
       this.animationDecoration(grass, game);
       clearTimeout(move);
@@ -126,6 +129,8 @@ class Game extends Component {
       modalWindow = null;
     }
 
+    let classesGrass = [classes.grass, classes.grass1].join(" ");
+
     return (
       <div className={classes.container}>
         <div className={classes.game}>
@@ -133,9 +138,8 @@ class Game extends Component {
           <div className={classes.object} />
           <div className={classes.screen} />
           <div className={classes.platform}>
-            <div className={classes.grass}>
-              <img src={file} alt="" />
-            </div>
+            <div className={classes.grass} />
+            <div className={classesGrass} />
           </div>
         </div>
         <div className={classes.controls}>

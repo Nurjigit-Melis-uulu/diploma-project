@@ -7,7 +7,6 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-family: 'VT323', monospace;
 }
 
 .container .modalWindow {
@@ -21,6 +20,7 @@
 	align-items: center;
 	flex-flow: column;
 	z-index: 99;
+	font-family: 'VT323', monospace;
 }
 
 .container .modalWindow h1 {
@@ -70,6 +70,7 @@
 	position: relative;
 	background: linear-gradient(to top, transparent, lightblue);
 	z-index: 1;
+	/* overflow: hidden; */
 }
 
 .container .game .platform {
@@ -106,16 +107,6 @@
 	position: absolute;
 	bottom: 100px;
 	left: 20px;
-}
-
-.container .game .object {
-	width: 20px;
-	height: 20px;
-	background: #000000;
-	position: absolute;
-	bottom: 100px;
-	right: 400px;
-	transition: transform 8s linear;
 }
 
 .dino.jump {
@@ -167,4 +158,28 @@
 
 .controls .jump:active {
 	background: lawngreen;
+}
+
+.staticScreen {
+	width: 1000px;
+	height: 60px;
+	position: absolute;
+	left: 1000px;
+	bottom: 100px;
+}
+
+.moveScreen {
+	width: 1000px;
+	height: 60px;
+	position: relative;
+}
+
+.container .game .object {
+	width: 20px;
+	height: 20px;
+	background: #000000;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	transition: transform 8s linear;
 }

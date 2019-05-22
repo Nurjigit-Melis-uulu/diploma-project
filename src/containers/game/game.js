@@ -9,16 +9,15 @@ class Game extends Component {
   };
 
   jump = event => {
-    let instance = event.target.parentElement.parentElement;
-    let object = instance.children[0].children[1];
-    let player = instance.children[0].children[0];
-    let platform = instance.children[0].children[3];
-    let game = instance.children[0];
-    let grass = instance.children[0].children[3].firstChild;
-    let grass2 = instance.children[0].children[3].lastChild;
+    let instance = event.target.parentElement.parentElement.children[0];
+    let screen = instance.children[1];
+    let player = instance.children[0];
+    let platform = instance.children[3];
+    let game = instance;
+    let grass = instance.children[3].firstChild;
+    let grass2 = instance.children[3].lastChild;
 
     if (this.state.jumping) {
-      object.style.transform = "translate(-1020px)";
       this.setState({
         jumping: false
       });
@@ -30,66 +29,19 @@ class Game extends Component {
       }, 1400);
     }
 
+    console.log(screen);
+
     if (this.state.start === false) {
       this.animationDecoration(grass, grass2, game);
-      this.moving(object, player, platform, game, grass);
+      this.moving(screen, player, platform, game, grass);
       this.setState({
         start: true
       });
     }
   };
 
-  animationDecoration = (grass, grass2, game) => {
-    let grassPos = grass.getBoundingClientRect();
-    let grass2Pos = grass2.getBoundingClientRect();
-    let gamePosition = game.getBoundingClientRect();
-    let anima = false;
-    let anima2 = false;
-    let touchesGr1 =
-      grassPos.right === gamePosition.right ||
-      grassPos.left === gamePosition.left ||
-      grassPos.left === gamePosition.right;
-    let touchesGr2 =
-      grass2Pos.right === gamePosition.right ||
-      grass2Pos.left === gamePosition.left ||
-      grass2Pos.left === gamePosition.right;
-
-    if (touchesGr1) {
-      grass.style.left = "-1000px";
-    }
-    if (touchesGr2) {
-      grass2.style.left = "-1000px";
-    }
-
-    if (grassPos.right === gamePosition.left) {
-      grass.style.transition = "none";
-      grass.style.left = "1000px";
-      anima = true;
-    }
-    if (grass2Pos.right === gamePosition.left) {
-      grass2.style.transition = "none";
-      grass2.style.left = "1000px";
-      anima2 = true;
-    }
-
-    let move = setTimeout(() => {
-      if (anima) {
-        grass.style.transition = "all 15.5s linear";
-        grass.style.left = "0";
-        anima = false;
-      }
-      if (anima2) {
-        grass2.style.transition = "all 15.5s linear";
-        grass2.style.left = "0";
-        anima2 = false;
-      }
-      this.animationDecoration(grass, grass2, game);
-      clearTimeout(move);
-    }, 100);
-  };
-
-  moving = (object, player, platform, game) => {
-    let objectPosition = object.getBoundingClientRect();
+  moving = (screen, player, platform, game) => {
+    let objectPosition = screen.getBoundingClientRect();
     let playerPosition = player.getBoundingClientRect();
     let platformPosition = platform.getBoundingClientRect();
     let gamePosition = game.getBoundingClientRect();
@@ -127,6 +79,55 @@ class Game extends Component {
         }, 50));
   };
 
+  animationDecoration = (grass, grass2, game) => {
+    let grassPos = grass.getBoundingClientRect();
+    let grass2Pos = grass2.getBoundingClientRect();
+    let gamePosition = game.getBoundingClientRect();
+    let anima = false;
+    let anima2 = false;
+    let touchesGr1 =
+      grassPos.right === gamePosition.right ||
+      grassPos.left === gamePosition.left ||
+      grassPos.left === gamePosition.right;
+    let touchesGr2 =
+      grass2Pos.right === gamePosition.right ||
+      grass2Pos.left === gamePosition.left ||
+      grass2Pos.left === gamePosition.right;
+
+    if (touchesGr1) {
+      grass.style.left = "-1000px";
+    }
+    if (touchesGr2) {
+      grass2.style.left = "-1000px";
+    }
+
+    if (grassPos.right === gamePosition.left) {
+      grass.style.transition = "none";
+      grass.style.left = "1000px";
+      anima = true;
+    }
+    if (grass2Pos.right === gamePosition.left) {
+      grass2.style.transition = "none";
+      grass2.style.left = "1000px";
+      anima2 = true;
+    }
+
+    let move = setTimeout(() => {
+      clearTimeout(move);
+      if (anima) {
+        grass.style.transition = "all 15.5s linear";
+        grass.style.left = "0";
+        anima = false;
+      }
+      if (anima2) {
+        grass2.style.transition = "all 15.5s linear";
+        grass2.style.left = "0";
+        anima2 = false;
+      }
+      this.animationDecoration(grass, grass2, game);
+    }, 50);
+  };
+
   render() {
     let playerClasses = [classes.dino];
     if (this.state.jumping) {
@@ -153,7 +154,14 @@ class Game extends Component {
       <div className={classes.container}>
         <div className={classes.game}>
           {player}
-          <div className={classes.object} />
+          <div className={classes.staticScreen}>
+            <div className={classes.moveScreen}>
+              <div className={classes.object} />
+              <div className={classes.object} />
+              <div className={classes.object} />
+              <div className={classes.object} />
+            </div>
+          </div>
           <div className={classes.screen} />
           <div className={classes.platform}>
             <div className={classes.grass} />

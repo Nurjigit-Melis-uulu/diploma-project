@@ -5,7 +5,8 @@ class Game extends Component {
   state = {
     jumping: true,
     modalWindow: false,
-    start: false
+    start: false,
+    delay: true
   };
 
   jump = event => {
@@ -29,8 +30,6 @@ class Game extends Component {
       }, 1400);
     }
 
-    console.log(screen);
-
     if (this.state.start === false) {
       this.animationDecoration(grass, grass2, game);
       this.moving(screen, player, platform, game, grass);
@@ -41,40 +40,43 @@ class Game extends Component {
   };
 
   moving = (screen, player, platform, game) => {
-    let objectPosition = screen.getBoundingClientRect();
     let playerPosition = player.getBoundingClientRect();
     let platformPosition = platform.getBoundingClientRect();
     let gamePosition = game.getBoundingClientRect();
+    let screenMove1 = screen.children[0];
+    let screenMove2 = screen.children[1];
+    let screenMove1Pos = screenMove1.getBoundingClientRect();
+    let screenMove2Pos = screenMove2.getBoundingClientRect();
     let stop = false;
     let move = null;
 
-    let touchesX =
-      objectPosition.x < playerPosition.width + playerPosition.x &&
-      objectPosition.x > playerPosition.x;
-    let touchesY =
-      playerPosition.y + playerPosition.height === platformPosition.y ||
-      playerPosition.y + playerPosition.height > platformPosition.y + 20;
-
-    if (touchesX && touchesY) {
-      console.log("stop, because object hit player!");
-      stop = true;
-      this.setState({
-        modalWindow: true
-      });
+    if (screenMove1Pos.left >= gamePosition.right) {
+      screenMove1.style.transition = "all 15.5s linear";
+      screenMove1.style.left = "-2000px";
     }
-
-    if (objectPosition.x <= gamePosition.x) {
-      console.log("stop");
-      stop = true;
+    if (this.state.delay) {
       this.setState({
-        modalWindow: true
-      });
+        delay: false
+      })
+      screenMove2.style.transition = "all 23.25s linear";
+      screenMove2.style.left = "-2000px";
+    } else if (screenMove2Pos.left >= gamePosition.right) {
+      screenMove2.style.transition = "all 15.5s linear";
+      screenMove2.style.left = "-2000px";
+    }
+    if (screenMove1Pos.right === gamePosition.left) {
+      screenMove1.style.transition = "none";
+      screenMove1.style.left = "0";
+    }
+    if (screenMove2Pos.right === gamePosition.left) {
+      screenMove2.style.transition = "none";
+      screenMove2.style.left = "0";
     }
 
     stop
       ? (move = null)
       : (move = setTimeout(() => {
-          this.moving(object, player, platform, game);
+          this.moving(screen, player, platform, game);
           clearTimeout(move);
         }, 50));
   };
@@ -155,12 +157,8 @@ class Game extends Component {
         <div className={classes.game}>
           {player}
           <div className={classes.staticScreen}>
-            <div className={classes.moveScreen}>
-              <div className={classes.object} />
-              <div className={classes.object} />
-              <div className={classes.object} />
-              <div className={classes.object} />
-            </div>
+            <div className={classes.moveScreen} />
+            <div className={classes.moveScreen1} />
           </div>
           <div className={classes.screen} />
           <div className={classes.platform}>

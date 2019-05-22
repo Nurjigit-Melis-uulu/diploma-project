@@ -161,8 +161,8 @@
 }
 
 .staticScreen {
-	width: 1000px;
 	height: 60px;
+	display: flex;
 	position: absolute;
 	left: 1000px;
 	bottom: 100px;
@@ -171,7 +171,19 @@
 .moveScreen {
 	width: 1000px;
 	height: 60px;
-	position: relative;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: rgba(114, 114, 114, 0.438);
+}
+
+.moveScreen1 {
+	width: 1000px;
+	height: 60px;
+	position: absolute;
+	bottom: 0;
+	left: 1000px;
+	background: rgba(114, 114, 114, 0.438);
 }
 
 .container .game .object {

@@ -31,24 +31,46 @@ class Game extends Component {
     }
 
     if (this.state.start === false) {
-      this.animationDecoration(grass, grass2, game);
-      this.moving(screen, player, platform, game, grass);
+      this.animationDecoration(grass, grass2, game, screen);
+      this.moving(screen, player, platform, game);
       this.setState({
         start: true
       });
     }
   };
 
-  moving = (screen, player, platform, game) => {
+  checkHits = (screen, player, platform, game) => {
     let playerPosition = player.getBoundingClientRect();
     let platformPosition = platform.getBoundingClientRect();
+    let stop = false;
+    let move = null;
+
+    stop
+      ? (move = null)
+      : (move = setTimeout(() => {
+          this.moving(screen, player, platform, game);
+          clearTimeout(move);
+        }, 50));
+  };
+
+  animationDecoration = (grass, grass2, game, screen) => {
+    let grassPos = grass.getBoundingClientRect();
+    let grass2Pos = grass2.getBoundingClientRect();
     let gamePosition = game.getBoundingClientRect();
+    let anima = false;
+    let anima2 = false;
+    let touchesGr1 =
+      grassPos.right === gamePosition.right ||
+      grassPos.left === gamePosition.left ||
+      grassPos.left === gamePosition.right;
+    let touchesGr2 =
+      grass2Pos.right === gamePosition.right ||
+      grass2Pos.left === gamePosition.left ||
+      grass2Pos.left === gamePosition.right;
     let screenMove1 = screen.children[0];
     let screenMove2 = screen.children[1];
     let screenMove1Pos = screenMove1.getBoundingClientRect();
     let screenMove2Pos = screenMove2.getBoundingClientRect();
-    let stop = false;
-    let move = null;
 
     if (screenMove1Pos.left >= gamePosition.right) {
       screenMove1.style.transition = "all 15.5s linear";
@@ -57,7 +79,7 @@ class Game extends Component {
     if (this.state.delay) {
       this.setState({
         delay: false
-      })
+      });
       screenMove2.style.transition = "all 23.25s linear";
       screenMove2.style.left = "-2000px";
     } else if (screenMove2Pos.left >= gamePosition.right) {
@@ -72,29 +94,6 @@ class Game extends Component {
       screenMove2.style.transition = "none";
       screenMove2.style.left = "0";
     }
-
-    stop
-      ? (move = null)
-      : (move = setTimeout(() => {
-          this.moving(screen, player, platform, game);
-          clearTimeout(move);
-        }, 50));
-  };
-
-  animationDecoration = (grass, grass2, game) => {
-    let grassPos = grass.getBoundingClientRect();
-    let grass2Pos = grass2.getBoundingClientRect();
-    let gamePosition = game.getBoundingClientRect();
-    let anima = false;
-    let anima2 = false;
-    let touchesGr1 =
-      grassPos.right === gamePosition.right ||
-      grassPos.left === gamePosition.left ||
-      grassPos.left === gamePosition.right;
-    let touchesGr2 =
-      grass2Pos.right === gamePosition.right ||
-      grass2Pos.left === gamePosition.left ||
-      grass2Pos.left === gamePosition.right;
 
     if (touchesGr1) {
       grass.style.left = "-1000px";
@@ -126,8 +125,16 @@ class Game extends Component {
         grass2.style.left = "0";
         anima2 = false;
       }
-      this.animationDecoration(grass, grass2, game);
+      this.animationDecoration(grass, grass2, game, screen);
     }, 50);
+  };
+
+  addObjects = element => {
+    let block = document.createElement("div");
+    block.className = `${classes.object}`;
+    element.append(block);
+    element.append(block);
+    element.append(block);
   };
 
   render() {
@@ -167,7 +174,7 @@ class Game extends Component {
           </div>
         </div>
         <div className={classes.controls}>
-          <button className={classes.jump} onClick={this.jump} />
+          <button className={classes.jump} onMouseDown={this.jump} />
         </div>
         {modalWindow}
       </div>

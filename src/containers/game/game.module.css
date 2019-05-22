@@ -68,7 +68,7 @@
 	width: 1000px;
 	height: 600px;
 	position: relative;
-	background: linear-gradient(to top, transparent, lightblue);
+	background: linear-gradient(10deg, transparent, lightblue, #7e8bc7);
 	z-index: 1;
 	/* overflow: hidden; */
 }

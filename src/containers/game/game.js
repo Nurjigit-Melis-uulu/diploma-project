@@ -134,8 +134,7 @@ class Game extends Component {
   addObjects = element => {
     let block = document.createElement("div");
     block.className = `${classes.object}`;
-    element.append(block);
-    element.append(block);
+    block.style.left = `${(Math.random() * 1000).toFixed(0)}px`;
     element.append(block);
   };
 

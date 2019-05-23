@@ -195,3 +195,26 @@
 	right: 0px;
 	transition: transform 8s linear;
 }
+
+.hitBox {
+	width: 200px;
+	height: 40px;
+	border-radius: 3px;
+	position: fixed;
+	top: 30px;
+	left: 30px;
+	z-index: 99;
+	background: white;
+}
+
+.hitPoint {
+	width: inherit;
+	height: inherit;
+	background: maroon;
+	color: white;
+	font-weight: bold;
+	font-size: 1.3em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

@@ -6,7 +6,8 @@ class Game extends Component {
     jumping: true,
     modalWindow: false,
     start: false,
-    delay: true
+    delay: true,
+    hitPoint: 100
   };
 
   jump = event => {
@@ -59,6 +60,12 @@ class Game extends Component {
 
     if (touchesX && touchesY) {
       console.log("stop, because object hit player!");
+      this.setState({
+        hitPoint: this.state.hitPoint - 20
+      });
+    }
+
+    if (this.state.hitPoint === 0) {
       stop = true;
       this.setState({
         modalWindow: true
@@ -183,6 +190,13 @@ class Game extends Component {
     }
 
     let classesGrass = [classes.grass, classes.grass1].join(" ");
+    let hitPoint = (
+      <div className={classes.hitPoint}>
+        <span>
+          {this.state.hitPoint}%
+        </span>
+      </div>
+    );
 
     return (
       <div className={classes.container}>
@@ -202,6 +216,7 @@ class Game extends Component {
           <button className={classes.jump} onMouseDown={this.jump} />
         </div>
         {modalWindow}
+        <div className={classes.hitBox}>{hitPoint}</div>
       </div>
     );
   }

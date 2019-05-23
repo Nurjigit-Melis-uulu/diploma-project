@@ -133,7 +133,7 @@ class Game extends Component {
 
   addObjects = element => {
     if (element.firstChild) {
-      console.log("it have");
+      element.innerHTML = "";
     }
     let block = document.createElement("div");
     block.className = `${classes.object}`;

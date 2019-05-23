@@ -54,11 +54,13 @@ class Game extends Component {
   };
 
   animationDecoration = (grass, grass2, game, screen) => {
+    let screenMove1 = screen.children[0];
+    let screenMove2 = screen.children[1];
     let grassPos = grass.getBoundingClientRect();
     let grass2Pos = grass2.getBoundingClientRect();
     let gamePosition = game.getBoundingClientRect();
-    let anima = false;
-    let anima2 = false;
+    let screenMove1Pos = screenMove1.getBoundingClientRect();
+    let screenMove2Pos = screenMove2.getBoundingClientRect();
     let touchesGr1 =
       grassPos.right === gamePosition.right ||
       grassPos.left === gamePosition.left ||
@@ -67,10 +69,8 @@ class Game extends Component {
       grass2Pos.right === gamePosition.right ||
       grass2Pos.left === gamePosition.left ||
       grass2Pos.left === gamePosition.right;
-    let screenMove1 = screen.children[0];
-    let screenMove2 = screen.children[1];
-    let screenMove1Pos = screenMove1.getBoundingClientRect();
-    let screenMove2Pos = screenMove2.getBoundingClientRect();
+    let anima = false;
+    let anima2 = false;
 
     if (screenMove1Pos.left >= gamePosition.right) {
       screenMove1.style.transition = "all 15.5s linear";
@@ -87,10 +87,12 @@ class Game extends Component {
       screenMove2.style.left = "-2000px";
     }
     if (screenMove1Pos.right === gamePosition.left) {
+      this.addObjects(screenMove1);
       screenMove1.style.transition = "none";
       screenMove1.style.left = "0";
     }
     if (screenMove2Pos.right === gamePosition.left) {
+      this.addObjects(screenMove2);
       screenMove2.style.transition = "none";
       screenMove2.style.left = "0";
     }

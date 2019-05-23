@@ -32,7 +32,7 @@ class Game extends Component {
 
     if (this.state.start === false) {
       this.animationDecoration(grass, grass2, game, screen);
-      this.moving(screen, player, platform, game);
+      this.checkHits(screen, player, platform, game);
       this.setState({
         start: true
       });
@@ -48,7 +48,7 @@ class Game extends Component {
     stop
       ? (move = null)
       : (move = setTimeout(() => {
-          this.moving(screen, player, platform, game);
+          this.checkHits(screen, player, platform, game);
           clearTimeout(move);
         }, 50));
   };

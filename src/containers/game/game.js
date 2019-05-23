@@ -59,9 +59,9 @@ class Game extends Component {
       playerPosition.y + playerPosition.height > platformPosition.y + 20;
 
     if (touchesX && touchesY) {
-      console.log("stop, because object hit player!");
+      console.log("object hit player!");
       this.setState({
-        hitPoint: this.state.hitPoint - 20
+        hitPoint: this.state.hitPoint - 2
       });
     }
 
@@ -192,9 +192,7 @@ class Game extends Component {
     let classesGrass = [classes.grass, classes.grass1].join(" ");
     let hitPoint = (
       <div className={classes.hitPoint}>
-        <span>
-          {this.state.hitPoint}%
-        </span>
+        <span>{this.state.hitPoint}%</span>
       </div>
     );
 

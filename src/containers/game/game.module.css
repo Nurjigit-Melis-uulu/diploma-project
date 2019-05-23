@@ -70,7 +70,7 @@
 	position: relative;
 	background: linear-gradient(10deg, transparent, lightblue, #7e8bc7);
 	z-index: 1;
-	/* overflow: hidden; */
+	overflow: hidden;
 }
 
 .container .game .platform {

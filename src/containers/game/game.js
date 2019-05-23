@@ -40,10 +40,30 @@ class Game extends Component {
   };
 
   checkHits = (screen, player, platform, game) => {
+    let object1 = screen.children[0].firstChild.getBoundingClientRect();
+    let object2 = screen.children[1].firstChild.getBoundingClientRect();
     let playerPosition = player.getBoundingClientRect();
     let platformPosition = platform.getBoundingClientRect();
+    let gamePosition = game.getBoundingClientRect();
     let stop = false;
     let move = null;
+
+    let touchesX =
+      (object1.x < playerPosition.width + playerPosition.x &&
+        object1.x > playerPosition.x) ||
+      (object2.x < playerPosition.width + playerPosition.x &&
+        object2.x > playerPosition.x);
+    let touchesY =
+      playerPosition.y + playerPosition.height === platformPosition.y ||
+      playerPosition.y + playerPosition.height > platformPosition.y + 20;
+
+    if (touchesX && touchesY) {
+      console.log("stop, because object hit player!");
+      stop = true;
+      this.setState({
+        modalWindow: true
+      });
+    }
 
     stop
       ? (move = null)
@@ -73,6 +93,7 @@ class Game extends Component {
     let anima2 = false;
 
     if (screenMove1Pos.left >= gamePosition.right) {
+      this.addObjects(screenMove1);
       screenMove1.style.transition = "all 15.5s linear";
       screenMove1.style.left = "-2000px";
     }
@@ -80,19 +101,19 @@ class Game extends Component {
       this.setState({
         delay: false
       });
+      this.addObjects(screenMove2);
       screenMove2.style.transition = "all 23.25s linear";
       screenMove2.style.left = "-2000px";
     } else if (screenMove2Pos.left >= gamePosition.right) {
+      this.addObjects(screenMove2);
       screenMove2.style.transition = "all 15.5s linear";
       screenMove2.style.left = "-2000px";
     }
     if (screenMove1Pos.right === gamePosition.left) {
-      this.addObjects(screenMove1);
       screenMove1.style.transition = "none";
       screenMove1.style.left = "0";
     }
     if (screenMove2Pos.right === gamePosition.left) {
-      this.addObjects(screenMove2);
       screenMove2.style.transition = "none";
       screenMove2.style.left = "0";
     }

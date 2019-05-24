@@ -9,7 +9,8 @@ class Game extends Component {
     modalWindow: false,
     start: false,
     delay: true,
-    hitPoint: 100
+    hitPoint: 100,
+    score: 0
   };
 
   jump = event => {
@@ -36,6 +37,7 @@ class Game extends Component {
     if (this.state.start === false) {
       this.animationDecoration(grass, grass2, game, screen);
       this.checkHits(screen, player, platform, game);
+      this.scoreCounter();
       this.setState({
         start: true
       });
@@ -167,7 +169,26 @@ class Game extends Component {
     let block = document.createElement("div");
     block.className = `${classes.object}`;
     block.style.left = `${(Math.random() * 1000).toFixed(0)}px`;
+    let block1 = document.createElement("div");
+    block1.className = `${classes.object}`;
+    block1.style.left = `${(Math.random() * 1000).toFixed(0)}px`;
     element.append(block);
+    element.append(block1);
+  };
+
+  scoreCounter = () => {
+    if (this.state.modalWindow === false) {
+      this.setState({
+        score: this.state.score + 1
+      });
+    } else {
+      return;
+    }
+
+    let scoreCounter = setTimeout(() => {
+      this.scoreCounter();
+      clearTimeout(scoreCounter);
+    }, 500);
   };
 
   render() {
@@ -196,7 +217,8 @@ class Game extends Component {
         <span>{this.state.hitPoint}%</span>
       </div>
     );
-    let bg = <img src={bgSvg} className={classes.bg} />;
+    let bg = <img src={bgSvg} alt="mountains" className={classes.bg} />;
+    let scoreShow = <span>Score: {this.state.score}</span>;
 
     return (
       <div className={classes.container}>
@@ -218,6 +240,7 @@ class Game extends Component {
         </div>
         {modalWindow}
         <div className={classes.hitBox}>{hitPoint}</div>
+        <div className={classes.score}>{scoreShow}</div>
       </div>
     );
   }

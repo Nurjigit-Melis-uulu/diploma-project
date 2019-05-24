@@ -25,13 +25,16 @@
 
 .container .modalWindow h1 {
 	margin: 0;
+	font-size: 4em;
+	text-shadow: 6px 6px rgba(0, 0, 0, 0.8); 
+	color: white;
 }
 
 .container .modalWindow .restart {
 	width: 80px;
 	height: 60px;
 	border-radius: 10px;
-	background: #535353;
+	background: #3f3f3f;
 	position: relative;
 	display: flex;
 	justify-content: center;
@@ -52,7 +55,7 @@
 	display: block;
 	width: 0;
 	height: 0;
-	border: 10px solid #535353;
+	border: 10px solid #3f3f3f;
 	border-left: 10px solid white;
 	position: absolute;
 	top: 9px;
@@ -174,7 +177,6 @@
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	background: rgba(114, 114, 114, 0.438);
 }
 
 .moveScreen1 {
@@ -183,7 +185,6 @@
 	position: absolute;
 	bottom: 0;
 	left: 1000px;
-	background: rgba(114, 114, 114, 0.438);
 }
 
 .container .game .object {
@@ -194,6 +195,18 @@
 	bottom: 0px;
 	right: 0px;
 	transition: transform 8s linear;
+}
+
+.score {
+	width: 100px;
+	height: 40px;
+	position: fixed;
+	top: 30px;
+	left: 230px;
+	z-index: 99;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .hitBox {

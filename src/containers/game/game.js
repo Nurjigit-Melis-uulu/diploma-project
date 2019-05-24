@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+
+import bgSvg from "../../assets/image/mountains.svg";
 import classes from "./Game.module.css";
 
 class Game extends Component {
@@ -45,7 +47,6 @@ class Game extends Component {
     let object2 = screen.children[1].firstChild.getBoundingClientRect();
     let playerPosition = player.getBoundingClientRect();
     let platformPosition = platform.getBoundingClientRect();
-    let gamePosition = game.getBoundingClientRect();
     let stop = false;
     let move = null;
 
@@ -195,6 +196,7 @@ class Game extends Component {
         <span>{this.state.hitPoint}%</span>
       </div>
     );
+    let bg = <img src={bgSvg} className={classes.bg} />;
 
     return (
       <div className={classes.container}>
@@ -209,6 +211,7 @@ class Game extends Component {
             <div className={classes.grass} />
             <div className={classesGrass} />
           </div>
+          {bg}
         </div>
         <div className={classes.controls}>
           <button className={classes.jump} onMouseDown={this.jump} />

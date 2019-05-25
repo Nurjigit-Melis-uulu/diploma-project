@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
+@font-face {
+	font-family: "Pixeltype";
+	src: url("../../assets/font/Pixeltype.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
 
 .container {
 	width: 100%;
@@ -20,7 +25,7 @@
 	align-items: center;
 	flex-flow: column;
 	z-index: 99;
-	font-family: 'VT323', monospace;
+	font-family: "Pixeltype";
 }
 
 .container .modalWindow h1 {

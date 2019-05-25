@@ -5,12 +5,13 @@ import classes from "./Game.module.css";
 
 class Game extends Component {
   state = {
-    jumping: true,
-    modalWindow: false,
-    start: false,
+    score: 0,
     delay: true,
+    start: false,
+    jumping: true,
     hitPoint: 100,
-    score: 0
+    restart: false,
+    modalWindow: false,
   };
 
   jump = event => {
@@ -53,10 +54,10 @@ class Game extends Component {
     let move = null;
 
     let touchesX =
-      (object1.x < playerPosition.width + playerPosition.x &&
-        object1.x > playerPosition.x) ||
-      (object2.x < playerPosition.width + playerPosition.x &&
-        object2.x > playerPosition.x);
+      (object1.x <= playerPosition.right &&
+        object1.x >= playerPosition.x) ||
+      (object2.x <= playerPosition.right &&
+        object2.x >= playerPosition.x);
     let touchesY =
       playerPosition.y + playerPosition.height === platformPosition.y ||
       playerPosition.y + playerPosition.height > platformPosition.y + 20;
@@ -158,9 +159,26 @@ class Game extends Component {
         grass2.style.left = "0";
         anima2 = false;
       }
-      this.animationDecoration(grass, grass2, game, screen);
+      if (this.state.restart) {
+        grass.style.left = "0";
+        grass2.style.left = "1000px";
+        grass.style.transition = "all 15.5s linear";
+        grass2.style.transition = "all 15.5s linear";
+      } else {
+        this.animationDecoration(grass, grass2, game, screen);
+      }
     }, 50);
   };
+
+  restartGame = () => {
+    this.setState({
+      score: 0,
+      start: false,
+      hitPoint: 100,
+      restart: false,
+      modalWindow: false,
+    })
+  }
 
   addObjects = element => {
     if (element.firstChild) {
@@ -204,7 +222,7 @@ class Game extends Component {
       modalWindow = (
         <div className={classes.modalWindow}>
           <h1>Game over</h1>
-          <div className={classes.restart} />
+          <div className={classes.restart} onClick={this.restartGame} />
         </div>
       );
     } else {

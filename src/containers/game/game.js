@@ -12,6 +12,7 @@ class Game extends Component {
     hitPoint: 100,
     restart: false,
     modalWindow: false,
+    playerPosX: 20
   };
 
   jump = event => {
@@ -54,10 +55,9 @@ class Game extends Component {
     let move = null;
 
     let touchesX =
-      (object1.x <= playerPosition.right &&
+      (object1.right <= playerPosition.right &&
         object1.x >= playerPosition.x) ||
-      (object2.x <= playerPosition.right &&
-        object2.x >= playerPosition.x);
+      (object2.right <= playerPosition.right && object2.x >= playerPosition.x);
     let touchesY =
       playerPosition.y + playerPosition.height === platformPosition.y ||
       playerPosition.y + playerPosition.height > platformPosition.y + 20;
@@ -65,7 +65,7 @@ class Game extends Component {
     if (touchesX && touchesY) {
       console.log("object hit player!");
       this.setState({
-        hitPoint: this.state.hitPoint - 2
+        hitPoint: this.state.hitPoint - 1
       });
     }
 
@@ -81,7 +81,7 @@ class Game extends Component {
       : (move = setTimeout(() => {
           this.checkHits(screen, player, platform, game);
           clearTimeout(move);
-        }, 50));
+        }, 10));
   };
 
   animationDecoration = (grass, grass2, game, screen) => {
@@ -164,9 +164,8 @@ class Game extends Component {
         grass2.style.left = "1000px";
         grass.style.transition = "all 15.5s linear";
         grass2.style.transition = "all 15.5s linear";
-      } else {
-        this.animationDecoration(grass, grass2, game, screen);
       }
+      this.animationDecoration(grass, grass2, game, screen);
     }, 50);
   };
 
@@ -176,9 +175,9 @@ class Game extends Component {
       start: false,
       hitPoint: 100,
       restart: false,
-      modalWindow: false,
-    })
-  }
+      modalWindow: false
+    });
+  };
 
   addObjects = element => {
     if (element.firstChild) {
@@ -209,6 +208,23 @@ class Game extends Component {
     }, 500);
   };
 
+  nitro = element => {
+    let o = 5000;
+    if (this.state.delay === false) {
+      element.style.left = `${this.state.playerPosX}px`;
+    }
+    let time = setTimeout(() => {
+      this.time();
+      clearTimeout(time);
+    }, o);
+  }
+
+  nitroClick = () => {
+    this.setState({
+      playerPosX: this.state.playerPosX + 100
+    })
+  }
+
   render() {
     let playerClasses = [classes.dino];
     if (this.state.jumping) {
@@ -216,7 +232,7 @@ class Game extends Component {
     } else {
       playerClasses = [classes.dino, classes.jump].join(" ");
     }
-    let player = <div className={playerClasses} />;
+    let player = <div className={playerClasses} style={{left: this.state.playerPosX}} />;
     let modalWindow = null;
     if (this.state.modalWindow) {
       modalWindow = (
@@ -254,11 +270,12 @@ class Game extends Component {
           {bg}
         </div>
         <div className={classes.controls}>
-          <button className={classes.jump} onMouseDown={this.jump} />
+          <button className={classes.jump} onClick={this.jump} />
         </div>
         {modalWindow}
         <div className={classes.hitBox}>{hitPoint}</div>
         <div className={classes.score}>{scoreShow}</div>
+        <button onClick={this.nitroClick}>nitro</button>
       </div>
     );
   }

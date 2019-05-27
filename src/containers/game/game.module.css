@@ -114,6 +114,7 @@
 	background: gray;
 	position: absolute;
 	bottom: 100px;
+	transition: left 1s;
 }
 
 .dino.jump {
@@ -140,6 +141,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.controls button {
+	margin: 0 10px;
 }
 
 .controls .jump {
@@ -239,4 +244,15 @@
 .bg {
 	width: 100%;
 	height: 500px;
+}
+
+.nitro {
+	width: 60px;
+	height: 60px;
+	background: white;
+	border: 4px solid rgb(37, 64, 139);
+	border-radius: 100%;
+	display: flex;
+	justify-content: center;
+	outline: none;
 }

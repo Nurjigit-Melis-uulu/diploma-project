@@ -271,11 +271,11 @@ class Game extends Component {
         </div>
         <div className={classes.controls}>
           <button className={classes.jump} onClick={this.jump} />
+          <button className={classes.nitro} onClick={this.nitroClick}>nitro</button>
         </div>
         {modalWindow}
         <div className={classes.hitBox}>{hitPoint}</div>
         <div className={classes.score}>{scoreShow}</div>
-        <button onClick={this.nitroClick}>nitro</button>
       </div>
     );
   }

@@ -25,7 +25,7 @@ class Game extends Component {
     let grass = instance.children[3].firstChild;
     let grass2 = instance.children[3].lastChild;
 
-    console.log(screen.children[0].children)
+    console.log(screen.children[0].children);
 
     if (this.state.jumping) {
       this.setState({
@@ -57,13 +57,12 @@ class Game extends Component {
     let touchesY =
       playerPosition.y + playerPosition.height === platformPosition.y ||
       playerPosition.y + playerPosition.height > platformPosition.y + 20;
-    
+
     for (const iterator of objectInScreen) {
       const element = iterator.getBoundingClientRect();
 
       let touchesX =
-        (element.right <= playerPosition.right &&
-          element.x >= playerPosition.x);
+        element.right <= playerPosition.right && element.x >= playerPosition.x;
 
       if (touchesX && touchesY) {
         console.log("object hit player!");
@@ -72,13 +71,12 @@ class Game extends Component {
         });
       }
     }
-    
+
     for (const iterator of objectInScreen2) {
       const element = iterator.getBoundingClientRect();
 
       let touchesX =
-        (element.right <= playerPosition.right &&
-          element.x >= playerPosition.x);
+        element.right <= playerPosition.right && element.x >= playerPosition.x;
 
       if (touchesX && touchesY) {
         console.log("object hit player!");
@@ -109,7 +107,7 @@ class Game extends Component {
     //     modalWindow: true
     //   });
     // }
-    
+
     if (this.state.hitPoint === 0) {
       stop = true;
       this.setState({
@@ -281,9 +279,6 @@ class Game extends Component {
     } else {
       playerClasses = [classes.dino, classes.jump].join(" ");
     }
-    let player = (
-      <div className={playerClasses} style={{ left: this.state.playerPosX }} />
-    );
     let modalWindow = null;
     if (this.state.modalWindow) {
       modalWindow = (
@@ -297,13 +292,14 @@ class Game extends Component {
     }
 
     let classesGrass = [classes.grass, classes.grass1].join(" ");
-    let bg = <img src={bgSvg} alt="mountains" className={classes.bg} />;
-    let scoreShow = <span>Score: {this.state.score}</span>;
 
     return (
       <div className={classes.container}>
         <div className={classes.game}>
-          {player}
+          <div
+            className={playerClasses}
+            style={{ left: this.state.playerPosX }}
+          />
           <div className={classes.staticScreen}>
             <div className={classes.moveScreen} />
             <div className={classes.moveScreen1} />
@@ -313,7 +309,7 @@ class Game extends Component {
             <div className={classes.grass} />
             <div className={classesGrass} />
           </div>
-          {bg}
+          <img src={bgSvg} alt="mountains" className={classes.bg} />
         </div>
         <div className={classes.controls}>
           <button className={classes.jump} onClick={this.jump} />
@@ -331,7 +327,9 @@ class Game extends Component {
             <span>{this.state.hitPoint}%</span>
           </div>
         </div>
-        <div className={classes.score}>{scoreShow}</div>
+        <div className={classes.score}>
+          <span>Score: {this.state.score}</span>
+        </div>
       </div>
     );
   }

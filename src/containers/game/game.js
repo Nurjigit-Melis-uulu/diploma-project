@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import bgSvg from "../../assets/image/mountains.svg";
+import run from "../../assets/image/run.png";
 import classes from "./Game.module.css";
 
 class Game extends Component {
@@ -13,7 +14,8 @@ class Game extends Component {
     hitPoint: 100,
     restart: false,
     modalWindow: false,
-    playerPosX: 20
+    playerPosX: 20,
+    x: 0
   };
 
   jump = event => {
@@ -39,8 +41,11 @@ class Game extends Component {
       }, 1400);
     }
 
+    console.log(player.firstChild);
+    
+
     if (this.state.start === false) {
-      this.animationDecoration(grass, grass2, game, screen);
+      this.animationDecoration(grass, grass2, game, screen, player);
       this.checkHits(screen, player, platform, game);
       this.scoreCounter();
       this.setState({ start: true });
@@ -123,7 +128,7 @@ class Game extends Component {
         }, 10));
   };
 
-  animationDecoration = (grass, grass2, game, screen) => {
+  animationDecoration = (grass, grass2, game, screen, player) => {
     let screenMove1 = screen.children[0];
     let screenMove2 = screen.children[1];
     let grassPos = grass.getBoundingClientRect();
@@ -184,6 +189,15 @@ class Game extends Component {
       grass2.style.transition = "none";
       grass2.style.left = "1000px";
       anima2 = true;
+    }
+    if (this.state.x === 2632) {
+      this.setState({
+        x: 0
+      });
+    } else {
+      this.setState({
+        x: this.state.x + 188
+      });
     }
 
     let move = setTimeout(() => {
@@ -299,7 +313,9 @@ class Game extends Component {
           <div
             className={playerClasses}
             style={{ left: this.state.playerPosX }}
-          />
+          >
+            <img src={run} alt="horse" style={{marginLeft: -this.state.x + "px"}} />
+          </div>
           <div className={classes.staticScreen}>
             <div className={classes.moveScreen} />
             <div className={classes.moveScreen1} />

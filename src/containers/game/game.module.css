@@ -109,12 +109,13 @@
 }
 
 .container .game .dino {
-	width: 100px;
-	height: 60px;
+	width: 188px;
+	height: 100px;
 	background: gray;
 	position: absolute;
 	bottom: 100px;
 	transition: left 1s;
+	overflow: hidden;
 }
 
 .dino.jump {

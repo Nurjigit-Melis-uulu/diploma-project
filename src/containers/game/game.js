@@ -7,6 +7,7 @@ class Game extends Component {
   state = {
     score: 0,
     delay: true,
+    nitro: false,
     start: false,
     jumping: true,
     hitPoint: 100,
@@ -24,6 +25,8 @@ class Game extends Component {
     let grass = instance.children[3].firstChild;
     let grass2 = instance.children[3].lastChild;
 
+    console.log(screen.children[0].children)
+
     if (this.state.jumping) {
       this.setState({
         jumping: false
@@ -40,35 +43,73 @@ class Game extends Component {
       this.animationDecoration(grass, grass2, game, screen);
       this.checkHits(screen, player, platform, game);
       this.scoreCounter();
-      this.setState({
-        start: true
-      });
+      this.setState({ start: true });
     }
   };
 
   checkHits = (screen, player, platform, game) => {
-    let object1 = screen.children[0].firstChild.getBoundingClientRect();
-    let object2 = screen.children[1].firstChild.getBoundingClientRect();
     let playerPosition = player.getBoundingClientRect();
     let platformPosition = platform.getBoundingClientRect();
     let stop = false;
     let move = null;
-
-    let touchesX =
-      (object1.right <= playerPosition.right &&
-        object1.x >= playerPosition.x) ||
-      (object2.right <= playerPosition.right && object2.x >= playerPosition.x);
+    let objectInScreen = screen.children[0].children;
+    let objectInScreen2 = screen.children[1].children;
     let touchesY =
       playerPosition.y + playerPosition.height === platformPosition.y ||
       playerPosition.y + playerPosition.height > platformPosition.y + 20;
+    
+    for (const iterator of objectInScreen) {
+      const element = iterator.getBoundingClientRect();
 
-    if (touchesX && touchesY) {
-      console.log("object hit player!");
-      this.setState({
-        hitPoint: this.state.hitPoint - 1
-      });
+      let touchesX =
+        (element.right <= playerPosition.right &&
+          element.x >= playerPosition.x);
+
+      if (touchesX && touchesY) {
+        console.log("object hit player!");
+        this.setState({
+          hitPoint: this.state.hitPoint - 1
+        });
+      }
+    }
+    
+    for (const iterator of objectInScreen2) {
+      const element = iterator.getBoundingClientRect();
+
+      let touchesX =
+        (element.right <= playerPosition.right &&
+          element.x >= playerPosition.x);
+
+      if (touchesX && touchesY) {
+        console.log("object hit player!");
+        this.setState({
+          hitPoint: this.state.hitPoint - 1
+        });
+      }
     }
 
+    // let touchesX =
+    //   (object1.right <= playerPosition.right &&
+    //     object1.x >= playerPosition.x) ||
+    //   (object2.right <= playerPosition.right && object2.x >= playerPosition.x);
+    // let touchesY =
+    //   playerPosition.y + playerPosition.height === platformPosition.y ||
+    //   playerPosition.y + playerPosition.height > platformPosition.y + 20;
+
+    // if (touchesX && touchesY) {
+    //   console.log("object hit player!");
+    //   this.setState({
+    //     hitPoint: this.state.hitPoint - 1
+    //   });
+    // }
+
+    // if (this.state.hitPoint === 0) {
+    //   stop = true;
+    //   this.setState({
+    //     modalWindow: true
+    //   });
+    // }
+    
     if (this.state.hitPoint === 0) {
       stop = true;
       this.setState({
@@ -212,18 +253,26 @@ class Game extends Component {
     let o = 5000;
     if (this.state.delay === false) {
       element.style.left = `${this.state.playerPosX}px`;
+      setTimeout(() => {
+        this.setState({
+          nitro: true
+        });
+      }, 1000);
     }
     let time = setTimeout(() => {
       this.time();
+      this.setState({
+        nitro: false
+      });
       clearTimeout(time);
     }, o);
-  }
+  };
 
   nitroClick = () => {
     this.setState({
       playerPosX: this.state.playerPosX + 100
-    })
-  }
+    });
+  };
 
   render() {
     let playerClasses = [classes.dino];
@@ -232,7 +281,9 @@ class Game extends Component {
     } else {
       playerClasses = [classes.dino, classes.jump].join(" ");
     }
-    let player = <div className={playerClasses} style={{left: this.state.playerPosX}} />;
+    let player = (
+      <div className={playerClasses} style={{ left: this.state.playerPosX }} />
+    );
     let modalWindow = null;
     if (this.state.modalWindow) {
       modalWindow = (
@@ -246,11 +297,6 @@ class Game extends Component {
     }
 
     let classesGrass = [classes.grass, classes.grass1].join(" ");
-    let hitPoint = (
-      <div className={classes.hitPoint}>
-        <span>{this.state.hitPoint}%</span>
-      </div>
-    );
     let bg = <img src={bgSvg} alt="mountains" className={classes.bg} />;
     let scoreShow = <span>Score: {this.state.score}</span>;
 
@@ -271,10 +317,20 @@ class Game extends Component {
         </div>
         <div className={classes.controls}>
           <button className={classes.jump} onClick={this.jump} />
-          <button className={classes.nitro} onClick={this.nitroClick}>nitro</button>
+          <button
+            className={classes.nitro}
+            onClick={this.nitroClick}
+            disabled={this.state.nitro}
+          >
+            nitro
+          </button>
         </div>
         {modalWindow}
-        <div className={classes.hitBox}>{hitPoint}</div>
+        <div className={classes.hitBox}>
+          <div className={classes.hitPoint}>
+            <span>{this.state.hitPoint}%</span>
+          </div>
+        </div>
         <div className={classes.score}>{scoreShow}</div>
       </div>
     );

@@ -6,6 +6,7 @@ import classes from "./Game.module.css";
 
 class Game extends Component {
   state = {
+    x: 0,
     score: 0,
     delay: true,
     nitro: false,
@@ -13,9 +14,8 @@ class Game extends Component {
     jumping: true,
     hitPoint: 100,
     restart: false,
-    modalWindow: false,
     playerPosX: 20,
-    x: 0
+    modalWindow: false,
   };
 
   jump = event => {
@@ -85,7 +85,7 @@ class Game extends Component {
       }
     }
 
-    if (this.state.hitPoint < 1) {
+    if (this.state.hitPoint <= 0) {
       this.setState({
         modalWindow: true,
         stop: true
@@ -193,11 +193,13 @@ class Game extends Component {
 
   restartGame = () => {
     this.setState({
+      x: 0,
       score: 0,
       start: false,
       hitPoint: 100,
+      playerPosX: 0,
       restart: false,
-      modalWindow: false
+      modalWindow: false,
     });
   };
 
@@ -299,6 +301,16 @@ class Game extends Component {
             <div className={classesGrass} />
           </div>
           <img src={bgSvg} alt="mountains" className={classes.bg} />
+          <div
+            className={classes.dino}
+            style={{ left: "780px" }}
+          >
+            <img
+              src={run}
+              alt="horse"
+              style={{ marginLeft: -this.state.x + "px" }}
+            />
+          </div>
         </div>
         <div className={classes.controls}>
           <button className={classes.jump} onClick={this.jump} />

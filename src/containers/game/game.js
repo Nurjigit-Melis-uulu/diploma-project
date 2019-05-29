@@ -15,7 +15,7 @@ class Game extends Component {
     hitPoint: 100,
     restart: false,
     playerPosX: 20,
-    modalWindow: false,
+    modalWindow: false
   };
 
   jump = event => {
@@ -43,6 +43,7 @@ class Game extends Component {
       this.animationDecoration(grass, grass2, game, screen);
       this.checkHits(screen, player, platform, game);
       this.scoreCounter();
+      this.nitroCount();
       this.setState({ start: true });
     }
   };
@@ -199,7 +200,7 @@ class Game extends Component {
       hitPoint: 100,
       playerPosX: 0,
       restart: false,
-      modalWindow: false,
+      modalWindow: false
     });
   };
 
@@ -232,23 +233,21 @@ class Game extends Component {
     }, 500);
   };
 
-  nitro = element => {
-    let o = 5000;
-    if (this.state.delay === false) {
-      element.style.left = `${this.state.playerPosX}px`;
-      setTimeout(() => {
-        this.setState({
-          nitro: true
-        });
-      }, 1000);
+  nitroCount = element => {
+    let nitro = false;
+    if (this.state.score > 99) {
+      nitro = true;
+      console.log(nitro);
+      
     }
-    let time = setTimeout(() => {
-      this.time();
-      this.setState({
-        nitro: false
-      });
-      clearTimeout(time);
-    }, o);
+
+    let nitroCount = setTimeout(() => {
+      clearTimeout(nitroCount);
+      nitro
+      ? this.setState({ nitro })
+      : this.setState({ nitro })
+      this.nitroCount();
+    }, 1000);
   };
 
   nitroClick = () => {
@@ -301,10 +300,7 @@ class Game extends Component {
             <div className={classesGrass} />
           </div>
           <img src={bgSvg} alt="mountains" className={classes.bg} />
-          <div
-            className={classes.dino}
-            style={{ left: "780px" }}
-          >
+          <div className={classes.dino} style={{ left: "780px" }}>
             <img
               src={run}
               alt="horse"

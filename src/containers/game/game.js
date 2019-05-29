@@ -27,8 +27,6 @@ class Game extends Component {
     let grass = instance.children[3].firstChild;
     let grass2 = instance.children[3].lastChild;
 
-    console.log(screen.children[0].children);
-
     if (this.state.jumping) {
       this.setState({
         jumping: false
@@ -38,14 +36,11 @@ class Game extends Component {
           jumping: !this.state.jumping
         });
         clearTimeout(jumpingInterval);
-      }, 1400);
+      }, 2000);
     }
 
-    console.log(player.firstChild);
-    
-
     if (this.state.start === false) {
-      this.animationDecoration(grass, grass2, game, screen, player);
+      this.animationDecoration(grass, grass2, game, screen);
       this.checkHits(screen, player, platform, game);
       this.scoreCounter();
       this.setState({ start: true });
@@ -55,7 +50,6 @@ class Game extends Component {
   checkHits = (screen, player, platform, game) => {
     let playerPosition = player.getBoundingClientRect();
     let platformPosition = platform.getBoundingClientRect();
-    let stop = false;
     let move = null;
     let objectInScreen = screen.children[0].children;
     let objectInScreen2 = screen.children[1].children;
@@ -91,36 +85,14 @@ class Game extends Component {
       }
     }
 
-    // let touchesX =
-    //   (object1.right <= playerPosition.right &&
-    //     object1.x >= playerPosition.x) ||
-    //   (object2.right <= playerPosition.right && object2.x >= playerPosition.x);
-    // let touchesY =
-    //   playerPosition.y + playerPosition.height === platformPosition.y ||
-    //   playerPosition.y + playerPosition.height > platformPosition.y + 20;
-
-    // if (touchesX && touchesY) {
-    //   console.log("object hit player!");
-    //   this.setState({
-    //     hitPoint: this.state.hitPoint - 1
-    //   });
-    // }
-
-    // if (this.state.hitPoint === 0) {
-    //   stop = true;
-    //   this.setState({
-    //     modalWindow: true
-    //   });
-    // }
-
-    if (this.state.hitPoint === 0) {
-      stop = true;
+    if (this.state.hitPoint < 1) {
       this.setState({
-        modalWindow: true
+        modalWindow: true,
+        stop: true
       });
     }
 
-    stop
+    this.state.modalWindow
       ? (move = null)
       : (move = setTimeout(() => {
           this.checkHits(screen, player, platform, game);
@@ -128,7 +100,7 @@ class Game extends Component {
         }, 10));
   };
 
-  animationDecoration = (grass, grass2, game, screen, player) => {
+  animationDecoration = (grass, grass2, game, screen) => {
     let screenMove1 = screen.children[0];
     let screenMove2 = screen.children[1];
     let grassPos = grass.getBoundingClientRect();
@@ -146,6 +118,7 @@ class Game extends Component {
       grass2Pos.left === gamePosition.right;
     let anima = false;
     let anima2 = false;
+    let move = null;
 
     if (screenMove1Pos.left >= gamePosition.right) {
       this.addObjects(screenMove1);
@@ -200,26 +173,22 @@ class Game extends Component {
       });
     }
 
-    let move = setTimeout(() => {
-      clearTimeout(move);
-      if (anima) {
-        grass.style.transition = "all 15.5s linear";
-        grass.style.left = "0";
-        anima = false;
-      }
-      if (anima2) {
-        grass2.style.transition = "all 15.5s linear";
-        grass2.style.left = "0";
-        anima2 = false;
-      }
-      if (this.state.restart) {
-        grass.style.left = "0";
-        grass2.style.left = "1000px";
-        grass.style.transition = "all 15.5s linear";
-        grass2.style.transition = "all 15.5s linear";
-      }
-      this.animationDecoration(grass, grass2, game, screen);
-    }, 50);
+    this.state.modalWindow
+      ? (move = null)
+      : (move = setTimeout(() => {
+          clearTimeout(move);
+          if (anima) {
+            grass.style.transition = "all 15.5s linear";
+            grass.style.left = "0";
+            anima = false;
+          }
+          if (anima2) {
+            grass2.style.transition = "all 15.5s linear";
+            grass2.style.left = "0";
+            anima2 = false;
+          }
+          this.animationDecoration(grass, grass2, game, screen);
+        }, 50));
   };
 
   restartGame = () => {
@@ -314,7 +283,11 @@ class Game extends Component {
             className={playerClasses}
             style={{ left: this.state.playerPosX }}
           >
-            <img src={run} alt="horse" style={{marginLeft: -this.state.x + "px"}} />
+            <img
+              src={run}
+              alt="horse"
+              style={{ marginLeft: -this.state.x + "px" }}
+            />
           </div>
           <div className={classes.staticScreen}>
             <div className={classes.moveScreen} />

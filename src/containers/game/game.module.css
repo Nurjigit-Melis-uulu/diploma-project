@@ -111,7 +111,6 @@
 .container .game .dino {
 	width: 188px;
 	height: 100px;
-	background: gray;
 	position: absolute;
 	bottom: 100px;
 	transition: left 1s;
@@ -119,7 +118,7 @@
 }
 
 .dino.jump {
-	animation: jump 1.4s 1 ease-in-out;
+	animation: jump 2s 1 ease-in-out;
 }
 	
 @keyframes jump {

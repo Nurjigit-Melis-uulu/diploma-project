@@ -1,14 +1,13 @@
 const initialState = {
-  winningCombinations: [],
-  player1: [],
-  player2: []
+  levels: []
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "":
+    case "ADD_LEVELS":
       return {
-        ...state
+        ...state,
+        levels: action.value
       };
 
     default:

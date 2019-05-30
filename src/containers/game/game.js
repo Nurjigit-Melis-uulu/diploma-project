@@ -15,6 +15,7 @@ class Game extends Component {
     hitPoint: 100,
     restart: false,
     playerPosX: 20,
+    nitroValue: 19,
     modalWindow: false
   };
 
@@ -235,18 +236,18 @@ class Game extends Component {
 
   nitroCount = element => {
     let nitro = false;
-    if (this.state.score > 99) {
+    if (this.state.score > this.state.nitroValue) {
       nitro = true;
-      console.log(nitro);
-      
+    } else {
+      nitro = false;
     }
 
     let nitroCount = setTimeout(() => {
-      clearTimeout(nitroCount);
       nitro
-      ? this.setState({ nitro })
-      : this.setState({ nitro })
+      ? this.setState({ nitro: false, nitroValue: this.state.nitroValue + 10 })
+      : this.setState({ nitro: true })
       this.nitroCount();
+      clearTimeout(nitroCount);
     }, 1000);
   };
 

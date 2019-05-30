@@ -137,7 +137,6 @@ class Game extends Component {
       });
     } else {
       if (screenMove1Pos.left >= gamePosition.right) {
-        this.addObjects(screenMove1);
         screenMove1.style.transition = "all 15.5s linear";
         screenMove1.style.left = "-2000px";
       }
@@ -145,21 +144,23 @@ class Game extends Component {
         this.setState({
           delay: false
         });
+        this.addObjects(screenMove1);
         this.addObjects(screenMove2);
         screenMove2.style.transition = "all 23.25s linear";
         screenMove2.style.left = "-2000px";
       } else if (screenMove2Pos.left >= gamePosition.right) {
-        this.addObjects(screenMove2);
         screenMove2.style.transition = "all 15.5s linear";
         screenMove2.style.left = "-2000px";
       }
       if (screenMove1Pos.right === gamePosition.left) {
         screenMove1.style.transition = "none";
         screenMove1.style.left = "0";
+        this.addObjects(screenMove1);
       }
       if (screenMove2Pos.right === gamePosition.left) {
         screenMove2.style.transition = "none";
         screenMove2.style.left = "0";
+        this.addObjects(screenMove2);
       }
 
       if (touchesGr1) {

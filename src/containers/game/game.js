@@ -16,7 +16,8 @@ class Game extends Component {
     restart: false,
     playerPosX: 20,
     nitroValue: 19,
-    modalWindow: false
+    modalWindow: false,
+    restoreAnima: false
   };
 
   jump = event => {
@@ -122,57 +123,71 @@ class Game extends Component {
     let anima2 = false;
     let move = null;
 
-    if (screenMove1Pos.left >= gamePosition.right) {
-      this.addObjects(screenMove1);
-      screenMove1.style.transition = "all 15.5s linear";
-      screenMove1.style.left = "-2000px";
-    }
-    if (this.state.delay) {
-      this.setState({
-        delay: false
-      });
-      this.addObjects(screenMove2);
-      screenMove2.style.transition = "all 23.25s linear";
-      screenMove2.style.left = "-2000px";
-    } else if (screenMove2Pos.left >= gamePosition.right) {
-      this.addObjects(screenMove2);
-      screenMove2.style.transition = "all 15.5s linear";
-      screenMove2.style.left = "-2000px";
-    }
-    if (screenMove1Pos.right === gamePosition.left) {
+    if (this.state.restoreAnima) {
       screenMove1.style.transition = "none";
-      screenMove1.style.left = "0";
-    }
-    if (screenMove2Pos.right === gamePosition.left) {
       screenMove2.style.transition = "none";
-      screenMove2.style.left = "0";
-    }
-
-    if (touchesGr1) {
-      grass.style.left = "-1000px";
-    }
-    if (touchesGr2) {
-      grass2.style.left = "-1000px";
-    }
-
-    if (grassPos.right === gamePosition.left) {
-      grass.style.transition = "none";
-      grass.style.left = "1000px";
-      anima = true;
-    }
-    if (grass2Pos.right === gamePosition.left) {
       grass2.style.transition = "none";
+      grass.style.transition = "none";
+      screenMove1.style.left = "1000px";
+      screenMove2.style.left = "2000px";
       grass2.style.left = "1000px";
-      anima2 = true;
-    }
-    if (this.state.x === 2632) {
+      grass.style.left = "0px";
       this.setState({
-        x: 0
+        restoreAnima: false
       });
     } else {
-      this.setState({
-        x: this.state.x + 188
-      });
+      if (screenMove1Pos.left >= gamePosition.right) {
+        this.addObjects(screenMove1);
+        screenMove1.style.transition = "all 15.5s linear";
+        screenMove1.style.left = "-2000px";
+      }
+      if (this.state.delay) {
+        this.setState({
+          delay: false
+        });
+        this.addObjects(screenMove2);
+        screenMove2.style.transition = "all 23.25s linear";
+        screenMove2.style.left = "-2000px";
+      } else if (screenMove2Pos.left >= gamePosition.right) {
+        this.addObjects(screenMove2);
+        screenMove2.style.transition = "all 15.5s linear";
+        screenMove2.style.left = "-2000px";
+      }
+      if (screenMove1Pos.right === gamePosition.left) {
+        screenMove1.style.transition = "none";
+        screenMove1.style.left = "0";
+      }
+      if (screenMove2Pos.right === gamePosition.left) {
+        screenMove2.style.transition = "none";
+        screenMove2.style.left = "0";
+      }
+
+      if (touchesGr1) {
+        grass.style.left = "-1000px";
+      }
+      if (touchesGr2) {
+        grass2.style.left = "-1000px";
+      }
+
+      if (grassPos.right === gamePosition.left) {
+        grass.style.transition = "none";
+        grass.style.left = "1000px";
+        anima = true;
+      }
+      if (grass2Pos.right === gamePosition.left) {
+        grass2.style.transition = "none";
+        grass2.style.left = "1000px";
+        anima2 = true;
+      }
+      if (this.state.x === 2632) {
+        this.setState({
+          x: 0
+        });
+      } else {
+        this.setState({
+          x: this.state.x + 188
+        });
+      }
     }
 
     this.state.modalWindow
@@ -197,11 +212,13 @@ class Game extends Component {
     this.setState({
       x: 0,
       score: 0,
+      delay: true,
       start: false,
       hitPoint: 100,
       playerPosX: 0,
       restart: false,
-      modalWindow: false
+      modalWindow: false,
+      restoreAnima: true
     });
   };
 
@@ -244,8 +261,11 @@ class Game extends Component {
 
     let nitroCount = setTimeout(() => {
       nitro
-      ? this.setState({ nitro: false, nitroValue: this.state.nitroValue + 10 })
-      : this.setState({ nitro: true })
+        ? this.setState({
+            nitro: false,
+            nitroValue: this.state.nitroValue + 10
+          })
+        : this.setState({ nitro: true });
       this.nitroCount();
       clearTimeout(nitroCount);
     }, 1000);

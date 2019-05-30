@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
-import axios from "./axios";
 
 import "./App.css";
 import Game from "./containers/Game/Game";

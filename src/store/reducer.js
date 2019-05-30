@@ -1,6 +1,6 @@
 const initialState = {
   levels: [],
-  params: null
+  params: 0
 };
 
 const reducer = (state = initialState, action) => {

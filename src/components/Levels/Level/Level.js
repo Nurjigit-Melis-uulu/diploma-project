@@ -1,19 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 import classes from "./Level.module.css";
 
 function Level(props) {
+  let time = props.time;
   return (
-    <div className={classes.Level} onClick={props.onLevelParams(props.time)}>
-      <i>time: {props.time}</i>
-      <span>{props.level}</span>
-      <div className={classes.stars}>
-        <span className={classes.star} />
-        <span className={classes.star} />
-        <span className={classes.star} />
+    <NavLink to="/" onClick={props.onLevelParams(time)}>
+      <div className={classes.Level}>
+        <i>time: {props.time}</i>
+        <span>{props.level}</span>
+        <div className={classes.stars}>
+          <span className={classes.star} />
+          <span className={classes.star} />
+          <span className={classes.star} />
+        </div>
       </div>
-    </div>
+    </NavLink>
   );
 }
 

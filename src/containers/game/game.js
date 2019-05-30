@@ -18,7 +18,8 @@ class Game extends Component {
     playerPosX: 20,
     nitroValue: 19,
     modalWindow: false,
-    restoreAnima: false
+    restoreAnima: false,
+    params: this.props.params
   };
 
   jump = event => {
@@ -47,6 +48,7 @@ class Game extends Component {
       this.checkHits(screen, player, platform, game);
       this.scoreCounter();
       this.nitroCount();
+      this.timeCount();
       this.setState({ start: true });
     }
   };
@@ -279,6 +281,25 @@ class Game extends Component {
     });
   };
 
+  timeCount = () => {
+    console.log(this.state.params, this.props.params);
+    
+    if (this.state.params === 0) {
+      this.setState({
+        modalWindow: true,
+        stop: true
+      });
+    } else {
+      this.setState({
+        params: this.state.params - 1
+      });
+      let timeCount = setTimeout(() => {
+        clearTimeout(timeCount);
+        this.timeCount();
+      }, 1000);
+    }
+  };
+
   render() {
     let playerClasses = [classes.dino];
     if (this.state.jumping) {
@@ -350,14 +371,11 @@ class Game extends Component {
         <div className={classes.score}>
           <span>Score: {this.state.score}</span>
         </div>
-        <div className={classes.time}>
-          60
-        </div>
+        <div className={classes.time}>{this.state.params}</div>
       </div>
     );
   }
 }
-
 
 const mapStateToProps = state => {
   return {

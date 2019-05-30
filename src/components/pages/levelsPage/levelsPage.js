@@ -17,7 +17,6 @@ function LevelsPage(props) {
       <div className={classes.content}>
         <div className={classes.carousel}>{levels}</div>
       </div>
-      LevelsPage
     </div>
   );
 }

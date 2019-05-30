@@ -1,5 +1,6 @@
 const initialState = {
-  levels: []
+  levels: [],
+  params: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -8,6 +9,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         levels: [...action.data]
+      };
+    case "TRANS_LEVEL_PARAMS":
+      return {
+        ...state,
+        params: action.params
       };
 
     default:

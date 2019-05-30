@@ -361,7 +361,7 @@ class Game extends Component {
 
 const mapStateToProps = state => {
   return {
-    levelTime: state.levelTime
+    params: state.params
   };
 };
 

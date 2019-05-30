@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import bgSvg from "../../assets/image/mountains.svg";
 import run from "../../assets/image/run.png";
@@ -349,9 +350,22 @@ class Game extends Component {
         <div className={classes.score}>
           <span>Score: {this.state.score}</span>
         </div>
+        <div className={classes.time}>
+          60
+        </div>
       </div>
     );
   }
 }
 
-export default Game;
+
+const mapStateToProps = state => {
+  return {
+    levelTime: state.levelTime
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(Game);

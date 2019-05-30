@@ -260,3 +260,14 @@
 .nitro:disabled {
 	background: maroon;
 }
+
+.time {
+	width: 100px;
+	text-align: center;
+	position: fixed;
+	top: 30px;
+	left: calc(50% - 50px);
+	z-index: 99;
+	font-size: 2em;
+	font-weight: bold;
+}

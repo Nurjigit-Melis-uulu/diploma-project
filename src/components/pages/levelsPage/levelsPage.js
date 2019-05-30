@@ -8,7 +8,7 @@ function LevelsPage(props) {
   console.log(props.levels);
   
   let levels = props.levels.map(level => {
-    return <Level level={level.level} />
+    return <Level level={level.level} time={level.time} />
   });
 
   return (

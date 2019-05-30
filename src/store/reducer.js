@@ -7,7 +7,7 @@ const reducer = (state = initialState, action) => {
     case "ADD_LEVELS":
       return {
         ...state,
-        levels: action.value
+        levels: [...action.data]
       };
 
     default:

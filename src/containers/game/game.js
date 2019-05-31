@@ -282,8 +282,6 @@ class Game extends Component {
   };
 
   timeCount = () => {
-    console.log(this.state.params, this.props.params);
-    
     if (this.state.params === 0) {
       this.setState({
         modalWindow: true,

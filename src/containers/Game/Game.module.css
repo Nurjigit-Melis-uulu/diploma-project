@@ -1,0 +1,273 @@
+@font-face {
+	font-family: "Pixeltype";
+	src: url("../../assets/font/Pixeltype.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+.container {
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container .modalWindow {
+	width: 300px;
+	height: 120px;
+	position: fixed;
+	top: calc(50% - 50px);
+	left: calc(50% - 150px);
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-flow: column;
+	z-index: 99;
+	font-family: "Pixeltype";
+}
+
+.container .modalWindow h1 {
+	margin: 0;
+	font-size: 4em;
+	text-shadow: 6px 6px rgba(0, 0, 0, 0.8); 
+	color: white;
+}
+
+.container .modalWindow .restart {
+	width: 80px;
+	height: 60px;
+	border-radius: 10px;
+	background: #3f3f3f;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container .modalWindow .restart::after {
+	content: "";
+	display: block;
+	width: 30px;
+	height: 20px;
+	border: 3px solid white;
+	border-radius: 10px;
+}
+
+.container .modalWindow .restart::before {
+	content: "";
+	display: block;
+	width: 0;
+	height: 0;
+	border: 10px solid #3f3f3f;
+	border-left: 10px solid white;
+	position: absolute;
+	top: 9px;
+	left: calc(50% - 10px);
+	border-radius: 2px;
+}
+
+.container .modalWindow button:active {
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, .5);
+}
+
+.container .game {
+	width: 1000px;
+	height: 600px;
+	position: relative;
+	background: linear-gradient(10deg, transparent, lightblue, #7e8bc7);
+	z-index: 1;
+	overflow: hidden;
+}
+
+.container .game .platform {
+	width: 1000px;
+	height: 100px;
+	background: green;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	background: url(../../assets/image/platform.png);
+}
+
+.container .game .platform .grass {
+	width: 1000px;
+	height: 100px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	transition: all 7.8s linear;
+	background: url(../../assets/image/platform.png);
+}
+
+.container .game .platform .grass1 {
+	position: absolute;
+	bottom: 0;
+	left: 1000px;
+	transition: all 15.5s linear;
+}
+
+.container .game .dino {
+	width: 188px;
+	height: 100px;
+	position: absolute;
+	bottom: 100px;
+	transition: left 1s;
+	overflow: hidden;
+}
+
+.dino.jump {
+	animation: jump 2s 1 ease-in-out;
+}
+	
+@keyframes jump {
+	0% {}
+	50% {
+		transform: translateY(-130px);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+.controls {
+	width: 100%;
+	height: 100px;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	z-index: 3;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.controls button {
+	margin: 0 10px;
+}
+
+.controls .jump {
+	width: 60px;
+	height: 60px;
+	background: white;
+	border: 4px solid rgb(10, 77, 8);
+	border-radius: 100%;
+	display: flex;
+	justify-content: center;
+	outline: none;
+}
+
+.controls .jump::after {
+	content: "";
+	display: block;
+	width: 0;
+	height: 0;
+	border: 18px solid transparent;
+	border-bottom-color: rgb(39, 38, 38);
+	margin-top: -24px; 
+}
+
+.controls .jump:active {
+	background: lawngreen;
+}
+
+.staticScreen {
+	height: 60px;
+	display: flex;
+	position: absolute;
+	left: 1000px;
+	bottom: 100px;
+}
+
+.moveScreen {
+	width: 1000px;
+	height: 60px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.moveScreen1 {
+	width: 1000px;
+	height: 60px;
+	position: absolute;
+	bottom: 0;
+	left: 1000px;
+}
+
+.container .game .object {
+	width: 20px;
+	height: 20px;
+	background: #000000;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	transition: transform 8s linear;
+}
+
+.score {
+	width: 100px;
+	height: 40px;
+	position: fixed;
+	top: 30px;
+	left: 230px;
+	z-index: 99;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.hitBox {
+	width: 200px;
+	height: 40px;
+	border-radius: 3px;
+	position: fixed;
+	top: 30px;
+	left: 30px;
+	z-index: 99;
+	background: white;
+}
+
+.hitPoint {
+	width: inherit;
+	height: inherit;
+	background: maroon;
+	color: white;
+	font-weight: bold;
+	font-size: 1.3em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.bg {
+	width: 100%;
+	height: 500px;
+}
+
+.nitro {
+	width: 60px;
+	height: 60px;
+	background: white;
+	border: 4px solid rgb(37, 64, 139);
+	border-radius: 100%;
+	display: flex;
+	justify-content: center;
+	outline: none;
+}
+
+.nitro:disabled {
+	background: maroon;
+}
+
+.time {
+	width: 100px;
+	text-align: center;
+	position: fixed;
+	top: 30px;
+	left: calc(50% - 50px);
+	z-index: 99;
+	font-size: 2em;
+	font-weight: bold;
+}

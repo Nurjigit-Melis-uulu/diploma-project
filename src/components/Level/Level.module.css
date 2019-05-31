@@ -1,0 +1,31 @@
+.Level {
+    width: 100px;
+    padding: 5px 0;
+    background: green;
+    margin: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    text-decoration: none;
+}
+
+.Level span {
+    color: white;
+    font-size: 3em;
+}
+
+.stars {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.star {
+    width: 20px;
+    height: 20px;
+    background: gold;
+    clip-path: polygon(0% 40%, 35% 40%, 50% 0%, 65% 40%, 100% 40%, 70% 60%, 90% 100%, 50% 70%, 10% 100%, 30% 60%);
+}

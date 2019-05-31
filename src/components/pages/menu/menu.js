@@ -10,7 +10,7 @@ function Menu(props) {
         <h1>Kyz-kuumay</h1>
         <span>The Kyrgyz national game</span>
         <div className={classes.menuControl}>
-          <NavLink to="/LevelsPage">Start game</NavLink>
+          <NavLink to="/Levels">Start game</NavLink>
           <NavLink to="/AboutGame">About the game</NavLink>
         </div>
       </div>

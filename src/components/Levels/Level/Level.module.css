@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: flex-start;
     position: relative;
+    text-decoration: none;
 }
 
 .Level span {

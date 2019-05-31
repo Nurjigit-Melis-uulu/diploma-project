@@ -7,7 +7,7 @@ import classes from "./Level.module.css";
 function Level(props) {
   let time = props.time;
   return (
-    <NavLink to="/" onClick={props.onLevelParams(time)}>
+    <NavLink to="/Game" onClick={props.onLevelParams(time)}>
       <div className={classes.Level}>
         <i>time: {props.time}</i>
         <span>{props.level}</span>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
+import axios from "./axios";
 
 import "./App.css";
 import Game from "./containers/Game/Game";
@@ -39,13 +40,22 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.onAddLevels([...this.state.levels]);
-    // axios
-    //   .get("")
-    //   .then(response => {
-    //     this.props.onAddLevels(response.data)
-    //   })
-    //   .catch(error => {});
+    axios
+      .get("/levels.json")
+      .then(response => {
+        let array = [];
+        let levels = response.data;
+        
+        for (const key in levels) {
+          if (levels.hasOwnProperty(key)) {
+            const element = levels[key];
+            console.log(element);
+            array.push(element);
+          }
+        }
+        this.props.onAddLevels([...array]);
+      })
+      .catch(error => {});
   }
 
   render() {

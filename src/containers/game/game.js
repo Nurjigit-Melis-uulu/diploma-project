@@ -91,7 +91,7 @@ class Game extends Component {
       }
     }
 
-    if (this.state.hitPoint <= 0) {
+    if (this.state.hitPoint <= 0 || this.state.playerPosX > 780) {
       this.setState({
         modalWindow: true,
         stop: true

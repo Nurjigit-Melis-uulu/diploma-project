@@ -35,4 +35,5 @@ This game is essentially "Dinosaur" when you do not have Internet. But made in t
     - bend over - shift ot down arrow
     - activate acceleration - inter or click with mouse
     
+##### You can play this link [id] https://kyz-kuumay.netlify.com/    
 ### Have a nice game! =)
